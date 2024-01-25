@@ -14,21 +14,22 @@ function AdminProducts() {
     productModal.current = new Modal('#productModal', {
       backdrop: 'static',
     });
-    
-    (async()=>{
+
+    getProducts();
+  },[]);
+  
+  const getProducts = async () => {
     const productRes = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/admin/products`);
-     console.log(productRes); 
-
-     setProducts(productRes.data.products);
-     setPagination(productRes.data.pagination);
-    })();
-    },[])
-
-    const openProductModal = ()=> {
+    console.log(productRes); 
+ 
+    setProducts(productRes.data.products);
+    setPagination(productRes.data.pagination);
+  }
+  const openProductModal = ()=> {
      productModal.current.show();
     }
 
-    const closeProductModal = ()=> {
+  const closeProductModal = ()=> {
      productModal.current.hide();
     }
 
@@ -36,7 +37,7 @@ function AdminProducts() {
     <>
       {/* Products */}
       <div className="p-3">
-        <ProductModal closeProductModal={closeProductModal} />
+        <ProductModal closeProductModal={closeProductModal} getProducts={getProducts} />
         <h3>產品列表</h3>
         <hr />
         <div className="text-end">
@@ -81,27 +82,6 @@ function AdminProducts() {
            </tr>
          )
       })}
-
-            {/* <tr>
-              <td>分類</td>
-              <td>名稱</td>
-              <td>價格</td>
-              <td>啟用</td>
-              <td>
-                <button
-                  type="button"
-                  className="btn btn-primary btn-sm"
-                >
-                  編輯
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-danger btn-sm ms-2"
-                >
-                  刪除
-                </button>
-              </td>
-            </tr> */}
           </tbody>
         </table>
 

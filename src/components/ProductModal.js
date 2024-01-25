@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
-function ProductModal({closeProductModal}){
+function ProductModal({closeProductModal, getProducts}){
 const [tempData, setTempData] = useState({
       title: "",
       category: "",
@@ -43,6 +43,8 @@ const submit = async()=>{
   data: tempData
 });
 console.log(res);
+closeProductModal();
+getProducts();
 } catch (error){
 console.log(error);
 }
@@ -56,12 +58,6 @@ return (
       <div className="modal-header">
         <h1 className="modal-title fs-5" id="exampleModalLabel">建立新商品</h1>
         <button type="button" className="btn-close"  aria-label="Close" onClick={closeProductModal}/>
-      </div>
-
-
-   <div className="modal-footer">
-        <button type="button" className="btn btn-secondary" onClick={closeProductModal}>Close</button>
-        <button type="button" className="btn btn-primary" onClick={submit}>Save changes</button>
       </div>
 
       <div className="modal-body">
@@ -93,10 +89,6 @@ return (
                 <img src="" alt='' className='img-fluid' />
               </div>
               <div className='col-sm-8'>
-
-                <pre>
-                  {JSON.stringify(tempData)}
-                </pre>
 
                 <div className='form-group mb-2'>
                   <label className='w-100' htmlFor='title'>
