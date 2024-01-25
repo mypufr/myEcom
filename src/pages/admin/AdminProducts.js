@@ -30,7 +30,6 @@ function AdminProducts() {
 
     const closeProductModal = ()=> {
      productModal.current.hide();
-
     }
 
   return (
