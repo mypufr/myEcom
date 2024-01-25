@@ -24,7 +24,6 @@ function AdminProducts() {
     })();
     },[])
 
-
     const openProductModal = ()=> {
      productModal.current.show();
     }
