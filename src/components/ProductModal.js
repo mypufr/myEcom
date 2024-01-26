@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
-function ProductModal({closeProductModal, getProducts}){
+function ProductModal({closeProductModal, getProducts, type, tempProduct}){
 const [tempData, setTempData] = useState({
       title: "",
       category: "",
@@ -10,9 +10,31 @@ const [tempData, setTempData] = useState({
       unit: "",
       description: "",
       content: "",
-      is_enabled: 1,
+      is_enabled: "",
       imageUrl: "",
     });
+
+useEffect(()=> {
+console.log(type, tempProduct);
+
+if (type === 'create'){
+setTempData({
+  title: "",
+  category: "",
+  origin_price: "",
+  price: "",
+  unit: "",
+  description: "",
+  content: "",
+  is_enabled:"",
+  imageUrl: "",
+});
+
+} else if (type === 'edit'){
+ setTempData(tempProduct);
+}
+},[type, tempProduct])
+
 
 
 const handleChange = (e) => {
@@ -39,7 +61,16 @@ const handleChange = (e) => {
 
 const submit = async()=>{
   try {
-  const res = await axios.post(`/v2/api/${process.env.REACT_APP_API_PATH}/admin/product`,{
+
+  let api = `/v2/api/${process.env.REACT_APP_API_PATH}/admin/product`
+  let method = 'post';
+if (type === 'edit') {
+  api = `/v2/api/${process.env.REACT_APP_API_PATH}/admin/product/${tempProduct.id}`
+  method = 'put';
+}
+  const res = await axios[method]
+  (api,
+    {
   data: tempData
 });
 console.log(res);
@@ -56,7 +87,9 @@ return (
   <div className="modal-dialog">
     <div className="modal-content">
       <div className="modal-header">
-        <h1 className="modal-title fs-5" id="exampleModalLabel">建立新商品</h1>
+        <h1 className="modal-title fs-5" id="exampleModalLabel">
+           {type === 'create' ? 'Create New Products' : `Edit ${tempProduct.title}`}
+        </h1>
         <button type="button" className="btn-close"  aria-label="Close" onClick={closeProductModal}/>
       </div>
 
@@ -207,7 +240,7 @@ return (
                         placeholder='請輸入產品說明內容'
                         className='form-check-input'
                         onChange={handleChange}
-                        value={tempData.is_enabled}
+                        checked={!!(tempData.is_enabled)}
                       />
                     </label>
                   </div>

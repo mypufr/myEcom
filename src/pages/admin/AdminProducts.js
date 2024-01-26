@@ -7,6 +7,8 @@ function AdminProducts() {
 
   const [products, setProducts] = useState([]);
   const [pagination, setPagination] = useState({});
+  const [type, setType] = useState('create');
+  const [tempProduct, setTempProduct] = useState({});
 
   const productModal = useRef(null);
 
@@ -25,7 +27,9 @@ function AdminProducts() {
     setProducts(productRes.data.products);
     setPagination(productRes.data.pagination);
   }
-  const openProductModal = ()=> {
+  const openProductModal = (type, product)=> {
+    setType(type);
+    setTempProduct(product);
      productModal.current.show();
     }
 
@@ -37,13 +41,13 @@ function AdminProducts() {
     <>
       {/* Products */}
       <div className="p-3">
-        <ProductModal closeProductModal={closeProductModal} getProducts={getProducts} />
+        <ProductModal closeProductModal={closeProductModal} getProducts={getProducts} tempProduct={tempProduct} type={type}/>
         <h3>產品列表</h3>
         <hr />
         <div className="text-end">
           <button
             type="button"
-            className="btn btn-primary btn-sm" onClick={openProductModal}>
+            className="btn btn-primary btn-sm" onClick={()=> openProductModal('create', {})}>
             建立新商品
           </button>
         </div>
@@ -64,11 +68,12 @@ function AdminProducts() {
             <td>{product.category}</td>
             <td>{product.title}</td>
             <td>{product.price}</td>
-            <td>{product.is_enable ? 'activé' : 'desactivé'}</td>
+            <td>{product.is_enabled ? 'activé' : 'desactivé'}</td>
             <td>
               <button
                 type="button"
                 className="btn btn-primary btn-sm"
+                onClick={()=> openProductModal('edit', product)}
               >
                 編輯
               </button>
