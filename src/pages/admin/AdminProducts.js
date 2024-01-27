@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import ProductModal from "../../components/ProductModal";
 import { Modal } from "bootstrap";
+import Pagination from "../../components/Pagination";
 
 function AdminProducts() {
 
@@ -20,8 +21,9 @@ function AdminProducts() {
     getProducts();
   },[]);
   
-  const getProducts = async () => {
-    const productRes = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/admin/products`);
+  const getProducts = async (page = 1) => {
+    const productRes = await axios.get(
+      `/v2/api/${process.env.REACT_APP_API_PATH}/admin/products?page=${page}`);
     console.log(productRes); 
  
     setProducts(productRes.data.products);
@@ -90,34 +92,51 @@ function AdminProducts() {
           </tbody>
         </table>
 
-        <nav aria-label="Page navigation example">
+        {/* <nav aria-label="Page navigation example">
           <ul className="pagination">
             <li className="page-item">
-              <a className="page-link disabled" href="/" aria-label="Previous">
+              <a 
+               href="/" aria-label="Previous"
+               className={`page-link ${pagination.has_pre ?"" : "disable"}`} 
+                 onClick = {(e)=> {
+                  e.preventDefault();
+                  getProducts(pagination.current_page-1);
+                  }}
+              >
                 <span aria-hidden="true">&laquo;</span>
               </a>
             </li>
             {
-              [...new Array(5)].map((_, i) => (
+              [...new Array(pagination.total_pages)].map((_, i) => (
                 // eslint-disable-next-line react/no-array-index-key
                 <li className="page-item" key={`${i}_page`}>
                   <a
-                    className={`page-link ${(i + 1 === 1) && 'active'}`}
-                    href="/"
-                  >
+                    className={`page-link ${(i + 1 === pagination.current_page) && 'active'}`} href="/"
+                  onClick = {(e)=> {
+                  e.preventDefault();
+                  getProducts(i+1);
+
+                  }}>
                     {i + 1}
                   </a>
-
                 </li>
               ))
             }
             <li className="page-item">
-              <a className="page-link" href="/" aria-label="Next">
+              <a 
+               className={`page-link ${pagination.has_next ? "" : "disable"}`} 
+                 onClick = {(e)=> {
+                  e.preventDefault();
+                  getProducts(pagination.current_page + 1);
+                  }}
+                  href="/"
+                  aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
               </a>
             </li>
           </ul>
-        </nav>
+        </nav> */}
+        <Pagination pagination={pagination} changePage={getProducts}/>
       </div>
       {/* Products end */}
     </>
