@@ -15,7 +15,7 @@ const [tempData, setTempData] = useState({
     });
 
 useEffect(()=> {
-console.log(type, tempProduct);
+// console.log(type, tempProduct);
 
 if (type === 'create'){
 setTempData({
