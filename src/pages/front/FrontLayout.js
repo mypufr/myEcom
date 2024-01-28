@@ -1,10 +1,12 @@
 import { Outlet } from "react-router-dom";
+import Navbar from "./Navbar";
+
 
 function FrontLayout() {
 
   return (
     <>
-      <div className="bg-white sticky-top">
+      {/* <div className="bg-white sticky-top">
         <div className="container">
           <nav className="navbar px-0 navbar-expand-lg navbar-light bg-white"> <a className="navbar-brand position-absolute" href="./index.html"
             style={{left: "50%", transform: "translate(-50%, -50%), top: 50%,"}}>
@@ -29,9 +31,9 @@ function FrontLayout() {
             </div>
           </nav>
         </div>
-      </div>
-
-       <Outlet> </Outlet>
+      </div> */}
+       <Navbar></Navbar>
+       <Outlet></Outlet>
 
       {/* <div className="container">
         <div className="row flex-md-row-reverse flex-column">
@@ -216,7 +218,7 @@ function FrontLayout() {
           </div>
         </div>
       </div> */}
-      
+
       <div className="bg-dark">
         <div className="container">
           <div className="d-flex align-items-center justify-content-between text-white py-4">
