@@ -7,7 +7,7 @@ function Pagination({pagination, changePage }){
       <li className="page-item">
         <a 
          href="/" aria-label="Previous"
-         className={`page-link ${pagination.has_pre ?"" : "disable"}`} 
+         className={`page-link ${pagination.has_pre ? "" : "disable"}`} 
            onClick = {(e)=> {
             e.preventDefault();
             changePage(pagination.current_page-1);
