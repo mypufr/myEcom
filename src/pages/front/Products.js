@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import Pagination from "../../components/Pagination";
 
 function Products() {
@@ -31,24 +32,20 @@ return(
 <div className="col-md-3" key={product.id}>
           <div className="card border-0 mb-4 position-relative position-relative">
             <img 
-            src="https://images.unsplash.com/photo-1591843336741-9f1238f66758?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1867&q=80" className="card-img-top rounded-0 object-cover" 
-            height={250}
-
-
-            // src={product.imageUrl} 
-
+            src={product.imageUrl} className="card-img-top rounded-0 object-cover" 
+            height={350}
             alt="..." 
             />
-            <a href="#" className="text-dark">
+            {/* <a href="#" className="text-dark">
               <i 
                 className="far fa-heart position-absolute"
                 style={{right: "16px", top: "16px"}}>
 
               </i>
-            </a>
+            </a> */}
             <div className="card-body p-0">
               <h4 className="mb-0 mt-2">
-                <a href="#">{product.title}</a>
+                <Link to={`/product/${product.id}`}>{product.title}</Link>
                 </h4>
               {/* <p className="card-text text-muted mb-0">
                 {product.content}
