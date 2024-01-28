@@ -13,9 +13,7 @@ export const messageReducer = (state, action) => {
 switch(action.type){
   case "POST_MESSAGE":
    return {
-    type: 'danger',
-    title: 'success reducer',
-    text: 'successful message'
+    ...action.payload
    };
 
   case "CLEAR_MESSAGE":
@@ -27,4 +25,38 @@ switch(action.type){
     return state
 }
 
+}
+
+export function handleSuccessMessage(dispatch, res) {
+  dispatch({
+    type: 'POST_MESSAGE',
+    payload: {
+      type: 'success',
+      title: 'updated with success',
+      text: res.data.message,
+    }
+  });
+  setTimeout(()=> {
+    dispatch({
+      type: 'CLEAR_MESSAGE',
+      });
+    }, 3000);
+}
+
+export function handleErrorMessage(dispatch, error) {
+  dispatch({
+    type: 'POST_MESSAGE',
+    payload: {
+      type: 'danger',
+      title: 'failed to update',
+      text: Array.isArray(error?.response?.data?.message)
+        ? error?.response?.data?.message.join(' ! ')
+        : error?.response?.data?.message,
+    }
+  });
+  setTimeout(()=> {
+    dispatch({
+      type: 'CLEAR_MESSAGE',
+      });
+    }, 3000);
 }

@@ -14,7 +14,6 @@ const [date, setDate] = useState(new Date());
 
 
 useEffect(()=> {
-// console.log(type, tempCoupon);
 
 if (type === 'create'){
 setTempData({

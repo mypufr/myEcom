@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 import axios from "axios";
+import { MessageContext, handleSuccessMessage, handleErrorMessage } from "../store/messageStore";
 
 function ProductModal({closeProductModal, getProducts, type, tempProduct}){
 const [tempData, setTempData] = useState({
@@ -14,8 +15,10 @@ const [tempData, setTempData] = useState({
       imageUrl: "",
     });
 
+const [, dispatch] = useContext(MessageContext);
+
+
 useEffect(()=> {
-// console.log(type, tempProduct);
 
 if (type === 'create'){
 setTempData({
@@ -74,10 +77,13 @@ if (type === 'edit') {
   data: tempData
 });
 console.log(res);
+handleSuccessMessage(dispatch, res);
 closeProductModal();
 getProducts();
+
 } catch (error){
 console.log(error);
+handleErrorMessage(dispatch, error);
 }
 };
 
@@ -259,3 +265,4 @@ return (
 }
 
 export default ProductModal; 
+

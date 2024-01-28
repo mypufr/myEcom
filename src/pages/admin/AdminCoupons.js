@@ -68,7 +68,7 @@ function AdminCoupons() {
 
   return (
     <>
-      {/* Products */}
+      {/* Coupon */}
       <div className="p-3">
         <CouponModal closeModal={closeModal} getCoupons={getCoupons} tempCoupon={tempCoupon} type={type}/>
         <DeleteModal close={closeDeleteModal}
@@ -127,7 +127,7 @@ function AdminCoupons() {
         </table>
         <Pagination pagination={pagination} changePage={getCoupons}/>
       </div>
-      {/* Products end */}
+      {/* Coupon end */}
     </>
 
   )
