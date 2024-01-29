@@ -4,8 +4,10 @@ import { useParams } from "react-router";
 
 function ProductDetail() {
   const [product, setProduct] = useState({});
+  const [cartQuantity, setCartQuantity] = useState(1);
   const { id } = useParams();
-  console.log(id);
+  const [isLoading, setIsLoading] = useState(false);
+
 
   const getProduct = async (id) => {
     const productRes = await axios.get(
@@ -13,6 +15,26 @@ function ProductDetail() {
     console.log(productRes); 
     setProduct(productRes.data.product);
   }
+
+  const addToCart = async()=>{
+  const data = {
+    "data": {
+      "product_id": product.id,
+      "qty": cartQuantity,
+    },
+  };
+   setIsLoading(true);
+  try {
+    const res = await axios.post(
+      `/v2/api/${process.env.REACT_APP_API_PATH}/cart`,data,
+    );
+    console.log(res); 
+    setIsLoading(false);
+  } catch (error) {
+    console.log(error);
+  }
+  }
+
 
 useEffect(()=>{
   getProduct(id);
@@ -30,7 +52,7 @@ return (
           <p className="fw-bold">{product.price} €</p>
           <p>{product.description}</p>
           <div className="my-4">
-            <img src={product.imageUrl} alt="" className="img-fluid mt-4" />
+            <img src={product.imageUrl}  height={800} alt="" className="img-fluid mt-4 object-cover" />
             {/* <img src="https://images.unsplash.com/photo-1502743780242-f10d2ce370f3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1916&q=80" alt="" className="img-fluid mt-4" />
             <img src="https://images.unsplash.com/photo-1502743780242-f10d2ce370f3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1916&q=80" alt="" className="img-fluid mt-4" /> */}
           </div>
@@ -85,18 +107,25 @@ return (
         <div className="col-md-4">
           <div className="input-group mb-3 border mt-3">
             <div className="input-group-prepend">
-              <button className="btn btn-outline-dark rounded-0 border-0 py-3" type="button" id="button-addon1">
-                <i className="fas fa-minus"></i>
+              <button className="btn btn-outline-dark rounded-0 border-0 py-3" type="button" id="button-addon1"
+               onClick={(()=>setCartQuantity((pre)=>pre ===1 ? pre : pre-1))}
+               >
+                <i className="bi bi-dash"></i>
               </button>
             </div>
-            <input type="text" className="form-control border-0 text-center my-auto shadow-none" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" />
+            <input type="number" className="form-control border-0 text-center my-auto shadow-none" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" readOnly value={cartQuantity} />
             <div className="input-group-append">
-              <button className="btn btn-outline-dark rounded-0 border-0 py-3" type="button" id="button-addon2">
-                <i className="fas fa-plus"></i>
+              <button className="btn btn-outline-dark rounded-0 border-0 py-3" type="button" id="button-addon2"
+              onClick={(()=>setCartQuantity((pre)=>pre+1))}
+              >
+                <i className="bi bi-plus"></i>
               </button>
             </div>
           </div>
-          <a href="./checkout.html" className="btn btn-dark btn-block rounded-0 py-3">Lorem ipsum</a>
+          <button type="button" className="btn btn-dark w-100 rounded-0 py-3"
+          onClick={()=> addToCart()}
+          disabled={isLoading}
+          >Commander</button>
         </div>
       </div>
     </div>
