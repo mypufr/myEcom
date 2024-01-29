@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router";
+import { useOutletContext, useParams } from "react-router";
 
 function ProductDetail() {
   const [product, setProduct] = useState({});
   const [cartQuantity, setCartQuantity] = useState(1);
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(false);
+  const { getCart } = useOutletContext();
 
 
   const getProduct = async (id) => {
@@ -29,12 +30,12 @@ function ProductDetail() {
       `/v2/api/${process.env.REACT_APP_API_PATH}/cart`,data,
     );
     console.log(res); 
+    getCart();
     setIsLoading(false);
   } catch (error) {
     console.log(error);
   }
   }
-
 
 useEffect(()=>{
   getProduct(id);
