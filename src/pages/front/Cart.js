@@ -1,10 +1,12 @@
 import { useOutletContext } from "react-router-dom";
+import { useState } from "react";
 import axios from "axios";
 
 function Cart(){
 
 const { cartData, getCart } = useOutletContext();
 console.log(cartData);
+const [loadingItems, setLoadingItems] = useState([]);
 
 
 const removeCartItem = async (id)=>{
@@ -17,10 +19,29 @@ const removeCartItem = async (id)=>{
     console.log(error);
   }
 }
+
+const updateCartItem = async (item, quantity)=>{
+const data = {
+  data: {
+    product_id: item.product_id,
+    qty: quantity,
+  }
+};
+setLoadingItems([...loadingItems, item.id])
+  try {
+    const res= await axios.put(
+      `/v2/api/${process.env.REACT_APP_API_PATH}/cart/${item.id}`, 
+      data);
+    console.log(res);
+    setLoadingItems(loadingItems.filter((loadingObject)=> loadingObject !== item.id))
+    getCart();
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 return(
-
 <>
-
 <div className="container">
       <div className="row justify-content-center">
         <div className="col-md-6 bg-white py-5" style={{minHeight: "calc(100vh - 56px - 76px),"}}>
@@ -29,10 +50,9 @@ return(
           </div>
 
         {cartData?.carts?.map((item)=>{
-
         return (
         <>
-        <div className="d-flex mt-4 bg-light" key={item.id}>
+        <div key={item.id} className="d-flex mt-4 bg-light" >
         <img src={item.product.imageUrl}
         alt="" 
         className="object-cover"
@@ -45,21 +65,38 @@ return(
           style={{top: "10px", right: "10px"}}
           onClick={()=> removeCartItem(item.id)}
           >
-
-
-            <i class="bi bi-x-lg"></i>
+            <i className="bi bi-x-lg"></i>
           </button>
           <p className="mb-0 fw-bold">{item.product.title}</p>
           <p className="mb-1 text-muted" style={{fontSize: "14px"}}>{item.product.description}</p>
           <div className="d-flex justify-content-between align-items-center w-100">
             <div className="input-group w-50 align-items-center">
-              <div className="input-group-prepend pe-1">
+
+              <select name="" className="form-select" id=""
+              value={item.qty}
+              disabled={loadingItems.includes(item.id)}
+              onChange={
+                (e)=>{
+                  updateCartItem(item, e.target.value*1)
+                }
+              }
+              >
+                 {
+                  [...(new Array(20))].map((i, num) => {
+                   console.log(i, num);
+                   return(
+                    <option value={num+1} key={num}>{num+1}</option>
+                   )
+                  })
+                 }
+              </select>
+              {/* <div className="input-group-prepend pe-1">
                 <a href="#"> <i className="fas fa-minus"></i></a>
-              </div>
-              <input type="text" className="form-control border-0 text-center my-auto shadow-none bg-light px-0" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" value="1" />
-              <div className="input-group-append ps-1">
+              </div> */}
+              {/* <input type="text" className="form-control border-0 text-center my-auto shadow-none bg-light px-0" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" value="1" /> */}
+              {/* <div className="input-group-append ps-1">
                 <a href="#"><i className="fas fa-plus"></i></a>
-              </div>
+              </div> */}
             </div>
             <p className="mb-0 ms-auto">{item.final_total}€</p>
           </div>
