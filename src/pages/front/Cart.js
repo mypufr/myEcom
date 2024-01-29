@@ -1,10 +1,22 @@
 import { useOutletContext } from "react-router-dom";
+import axios from "axios";
 
 function Cart(){
 
-const { cartData } = useOutletContext();
- console.log(cartData);
+const { cartData, getCart } = useOutletContext();
+console.log(cartData);
 
+
+const removeCartItem = async (id)=>{
+  try {
+    const res= await axios.delete(
+      `/v2/api/${process.env.REACT_APP_API_PATH}/cart/${id}`);
+    console.log(res);
+    getCart();
+  } catch (error) {
+    console.log(error);
+  }
+}
 return(
 
 <>
@@ -27,14 +39,18 @@ return(
         style={{width: "250px"}}
          />
         <div className="w-100 p-3 position-relative">
-          <a 
-          href="#" 
-          className="position-absolute" 
-          style={{top: "16px", right: "16px,"}}>
+          <button 
+          type="button"
+          className="position-absolute btn" 
+          style={{top: "10px", right: "10px"}}
+          onClick={()=> removeCartItem(item.id)}
+          >
+
+
             <i class="bi bi-x-lg"></i>
-          </a>
+          </button>
           <p className="mb-0 fw-bold">{item.product.title}</p>
-          <p className="mb-1 text-muted" style={{fontSize: "14px,"}}>{item.product.description}</p>
+          <p className="mb-1 text-muted" style={{fontSize: "14px"}}>{item.product.description}</p>
           <div className="d-flex justify-content-between align-items-center w-100">
             <div className="input-group w-50 align-items-center">
               <div className="input-group-prepend pe-1">
@@ -57,9 +73,9 @@ return(
 {/* <div className="d-flex mt-4 bg-light">
 <img src="https://images.unsplash.com/photo-1502743780242-f10d2ce370f3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1916&q=80" alt="" style={{width: "120px", height: "120px", objectFit: "cover,"}} />
 <div className="w-100 p-3 position-relative">
-  <a href="#" className="position-absolute" style={{top: "16px", right: "16px,"}}><i className="fas fa-times"></i></a>
+  <a href="#" className="position-absolute" style={{top: "16px", right: "16px"}}><i className="fas fa-times"></i></a>
   <p className="mb-0 fw-bold">Lorem ipsum,</p>
-  <p className="mb-1 text-muted" style={{fontSize: "14px,"}}>Lorem ipsum dolor sit amet</p>
+  <p className="mb-1 text-muted" style={{fontSize: "14px"}}>Lorem ipsum dolor sit amet</p>
   <div className="d-flex justify-content-between align-items-center w-100">
     <div className="input-group w-50 align-items-center">
       <div className="input-group-prepend pe-1">
@@ -78,9 +94,9 @@ return(
           <div className="d-flex mt-4 bg-light">
             <img src="https://images.unsplash.com/photo-1502743780242-f10d2ce370f3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1916&q=80" alt="" style={{width: "120px", height: "120px", objectFit: "cover,"}} />
             <div className="w-100 p-3 position-relative">
-              <a href="#" className="position-absolute" style={{top: "16px", right: "16px,"}}><i className="fas fa-times"></i></a>
+              <a href="#" className="position-absolute" style={{top: "16px", right: "16px"}}><i className="fas fa-times"></i></a>
               <p className="mb-0 fw-bold">Lorem ipsum</p>
-              <p className="mb-1 text-muted" style={{fontSize: "14px,"}}>Lorem ipsum dolor sit amet</p>
+              <p className="mb-1 text-muted" style={{fontSize: "14px"}}>Lorem ipsum dolor sit amet</p>
               <div className="d-flex justify-content-between align-items-center w-100">
                 <div className="input-group w-50 align-items-center">
                   <div className="input-group-prepend pe-1">
