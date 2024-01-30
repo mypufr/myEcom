@@ -7,18 +7,18 @@ return(
       <div className="bg-white sticky-top">
         <div className="container">
           <nav className="navbar px-0 navbar-expand-lg navbar-light bg-white"> 
-            <NavLink className="navbar-brand position-absolute" to="/"
-            style={{left: "50%", transform: "translate(-50%, -50%), top: 50%,"}}>
-            Vegan Paradise
+            <NavLink className="navbar-brand position-absolute " to="/"
+            style={{left: "50%", transform: "translate(-50%, -50%), top: 50%", textShadow: "#c2e812 1px 0 10px", fontStyle:"italic"}}>
+            <h2 className="text-muted">Vegan Paradise</h2>
             </NavLink>
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
-            <div className="collapse navbar-collapse bg-white custom-header-md-open" id="navbarNav">
+            <div className="collapse navbar-collapse  custom-header-md-open " id="navbarNav"  >
               <ul className="navbar-nav">
                 <li className="nav-item active">
                     <NavLink className="nav-link ps-0" to="/products">
-                     產品列表
+                     <h5 style={{ borderBottom:"1px #33721c solid"}}>Nos plats</h5>
                     </NavLink>
                 </li>
                 {/* <li className="nav-item">

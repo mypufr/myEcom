@@ -29,7 +29,6 @@ function Checkout() {
         tel,
         address,
         },
-        message: "這是留言"
      },
    };
    const res = await axios.post(
@@ -45,14 +44,14 @@ function Checkout() {
         <div className="row justify-content-center flex-md-row flex-column-reverse">
           <form className="col-md-6" onSubmit={handleSubmit(onSubmit)}>
             <div className="bg-white p-4">
-              <h4 className="fw-bold">外送資料</h4>
+              <h4 className="fw-bold">Vos coordonnées pour la livraison</h4>
               {/* <p className="mt-4">Contact information</p> */}
               {/* <form> */}
               <div className="mb-2">
 
                 <Input
                   id="email"
-                  labelText="Email"
+                  labelText="Email ?"
                   type="email"
                   errors={errors}
                   register={register}
@@ -79,7 +78,7 @@ function Checkout() {
               <div className="mb-2">
                 {/* <label htmlFor="ContactName" className="text-muted mb-0 form-label"
                   >
-                  姓名
+                  Votre nom ?
                   </label>
                   <input type="text" 
                   className="form-control rounded-0" id="ContactName" placeholder="Carmen A. Rose" /> */}
@@ -88,7 +87,7 @@ function Checkout() {
                   id="name"
                   type="text"
                   errors={errors}
-                  labelText="Username" register={register} rules={
+                  labelText="Votre nom ?" register={register} rules={
                     {
                       required: "Username required",
                       maxiLength: {
@@ -104,7 +103,7 @@ function Checkout() {
                   id="tel"
                   type="tel"
                   errors={errors}
-                  labelText="Telephone number" register={register} rules={
+                  labelText="N° de téléphone ?" register={register} rules={
                     {
                       required: "telephone number required",
                       miniLength: {
@@ -133,7 +132,7 @@ function Checkout() {
                   id="address"
                   type="address"
                   errors={errors}
-                  labelText="Address" register={register} rules={
+                  labelText="Address ?" register={register} rules={
                     {
                       required: "Address required",
                     }}
@@ -151,16 +150,16 @@ function Checkout() {
             </div>
             <div className="d-flex flex-column-reverse flex-md-row mt-4 justify-content-between align-items-md-center align-items-end w-100">
               <Link to="/cart" className="text-dark mt-md-0 mt-3">
-                <i className="bi bi-chevron-left me-2"></i> 繼續點餐</Link>
+                <i className="bi bi-chevron-left me-2"></i> Continuer à commander</Link>
               <button type='submit' className='btn btn-dark py-3 px-7 rounded-0'
               >
-                送出表單
+                Valider
               </button>
             </div>
           </form>
           <div className="col-md-4">
             <div className="border p-4 mb-4">
-              <h4 className="mb-4">Order Detail</h4>
+              <h4 className="mb-4">Récap de la commande</h4>
 
               {cartData?.carts?.map((item) => {
 
@@ -178,9 +177,9 @@ function Checkout() {
                       </div>
                       <div className="d-flex justify-content-between">
                         <p className="text-muted mb-0">
-                          <small>{item.product.price}</small>
+                          <small>{item.product.price}€</small>
                         </p>
-                        <p className="mb-0">{item.final_total} €</p>
+                        <p className="mb-0">{item.final_total}€</p>
                       </div>
                     </div>
                   </div>
@@ -188,7 +187,7 @@ function Checkout() {
               })}
 
               <div className="d-flex justify-content-between mt-4">
-                <p className="mb-0 h4 fw-bold">Total</p>
+                <p className="mb-0 h4 fw-bold">Prix à payer</p>
                 <p className="mb-0 h4 fw-bold">{cartData.final_total} €</p>
               </div>
             </div>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useOutletContext, useParams } from "react-router";
+import { Link } from "react-router-dom";
 
 function ProductDetail() {
   const [product, setProduct] = useState({});
@@ -44,8 +45,8 @@ useEffect(()=>{
 return (
 <>
 <div className="container">
-      <div style={{minHeight: "400px", backgroundImage: `url(${product.imageUrl})`,
-      backgroundPosition: "center center,"}}>
+      <div style={{height: "450px", backgroundImage: `url(https://images.unsplash.com/photo-1529006557810-274b9b2fc783?q=80&w=2676&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)`,
+      backgroundPosition: "center", backgroundSize: "cover", objectFit:"cover"}}>
       </div>
       <div className="row justify-content-between mt-4 mb-7">
         <div className="col-md-7">
@@ -53,7 +54,7 @@ return (
           <p className="fw-bold">{product.price} €</p>
           <p>{product.description}</p>
           <div className="my-4">
-            <img src={product.imageUrl}  height={800} alt="" className="img-fluid mt-4 object-cover" />
+            <img src={product.imageUrl} style={{height:"600px"}} alt="" className="img-fluid mt-4 object-cover" />
             {/* <img src="https://images.unsplash.com/photo-1502743780242-f10d2ce370f3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1916&q=80" alt="" className="img-fluid mt-4" />
             <img src="https://images.unsplash.com/photo-1502743780242-f10d2ce370f3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1916&q=80" alt="" className="img-fluid mt-4" /> */}
           </div>
@@ -123,10 +124,19 @@ return (
               </button>
             </div>
           </div>
-          <button type="button" className="btn btn-dark w-100 rounded-0 py-3"
+          <button type="button" className="btn btn-dark w-100 mb-4 rounded-0 py-3"
           onClick={()=> addToCart()}
           disabled={isLoading}
           >Commander</button>
+
+          <Link to='/products' className='btn btn-outline-dark me-2 rounded-0 mb-4 w-100'>
+              Continuer à commander
+            </Link>
+
+            <Link to='/cart' className='btn btn-outline-dark me-2 rounded-0 mb-4 w-100'>
+              Voir mon panier
+            </Link>
+
         </div>
       </div>
     </div>

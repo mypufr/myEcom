@@ -59,12 +59,13 @@ return (
                   height={350}
                   alt="..." 
                   />
-                  <div className="card-body p-0">
+                  <div className="card-body p-0 d-flex align-items-start flex-column">
+                   <div className="mb-auto p-2">
                     <h4 className="mb-0 mt-2">
-                      <Link to={`/product/${product.id}`}>{product.title}</Link>
+                      <Link to={`/product/${product.id}`} style={{ textDecoration: "none"}}>{product.title}</Link>
                       </h4>
-
                     <p className="text-muted mt-1">{product.price} €</p>
+                    </div>
                   </div>
                 </div>
               </div>

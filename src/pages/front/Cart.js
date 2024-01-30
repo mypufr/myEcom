@@ -100,10 +100,10 @@ return(
 
         })}
           <div className="d-flex justify-content-between mt-4">
-            <p className="mb-0 h4 fw-bold">Total Price</p>
-            <p className="mb-0 h4 fw-bold">{cartData.final_total}</p>
+            <p className="mb-0 h4 fw-bold">Prix total</p>
+            <p className="mb-0 h4 fw-bold">{cartData.final_total} €</p>
           </div>
-          <Link to="/checkout" className="btn btn-dark btn-block mt-4 w-100 rounded-0 py-3">Confirmer la commande</Link>
+          <Link to="/checkout" className="btn btn-dark btn-block mt-4 w-100 rounded-0 py-3">Confirmer</Link>
         </div>
       </div>
     </div>
