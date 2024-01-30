@@ -1,4 +1,4 @@
-import { Link, useOutletContext } from 'react-router-dom';
+import { Link, useOutletContext, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { Input } from '../../components/FormElements';
 import axios from 'axios';
@@ -13,6 +13,9 @@ function Checkout() {
   } = useForm({
     mode: 'onTouched',
   });
+
+
+  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     const { name, email, tel, address} = data;
@@ -32,6 +35,7 @@ function Checkout() {
    const res = await axios.post(
      `/v2/api/${process.env.REACT_APP_API_PATH}/order`,form);
      console.log(res); 
+     navigate(`/success/${res.data.orderId}`);
     }
   
   return (
@@ -200,3 +204,4 @@ export default Checkout;
 
 
 
+// -NpPCDfxhRwXuVUqcHy3
